@@ -26,7 +26,7 @@ jobs:
 
       - name: 🏗️ Build React App
         working-directory: ./metricWave-main
-        run: npm run build
+        run: npm install --legacy-peer-deps
 
       - name: 🚚 Copy build to sanjay_deploy/
         run: |
