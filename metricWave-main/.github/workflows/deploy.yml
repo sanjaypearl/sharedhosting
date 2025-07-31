@@ -1,49 +1,47 @@
-name: Deploy via SCP (Code Only)
+name: Build and Save React App to sanjay_deploy folder
 
 on:
   push:
     branches:
-      - main         # Trigger on push to master
-  workflow_dispatch:   # Manual trigger option
+      - main
+    paths-ignore:
+      - 'sanjay_deploy/**'
 
 jobs:
-  deploy:
+  build-and-save:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout Code
+      - name: 📥 Checkout Source Code
         uses: actions/checkout@v3
 
-      - name: 📤 Deploy Code to Server via SCP
-        uses: appleboy/scp-action@v0.1.4
+      - name: 🛠️ Setup Node
+        uses: actions/setup-node@v3
         with:
-          host: ${{ secrets.SERVER_IP }}
-          username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "."                         # Whole repo
-          target: "/var/www/metricWave"       # Server path
-          overwrite: true
-          strip_components: 0
+          node-version: 18
 
-      - name: 🚀 SSH and Build on Server
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /var/www/metricWave
-            echo "📦 Installing npm dependencies"
-            npm install --legacy-peer-deps
+      - name: 📦 Install Dependencies
+        run: npm ci
 
-            echo "🔨 Building the project"
-            npm run build
+      - name: 🏗️ Build React App
+        run: npm run build
 
-            echo "🛑 Stopping old PM2 process"
-            pm2 stop ecom-market || true
-            pm2 delete ecom-market || true
+      - name: 🚚 Copy build to sanjay_deploy/
+        run: |
+          rm -rf sanjay_deploy
+          mkdir -p sanjay_deploy
+          cp -r build/* sanjay_deploy/
 
-            echo "🚀 Starting production server with serve"
-            pm2 start "serve -s build -l 3000" --name ecom-market
+      - name: 📤 Commit and push sanjay_deploy folder
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git add sanjay_deploy
 
-            echo "✅ Deployment complete for branch: ${{ github.ref_name }}"
+          # Only commit if there are changes
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "🚀 Update sanjay_deploy with latest React build"
+            git push
+          fi
