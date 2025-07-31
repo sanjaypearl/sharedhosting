@@ -1,0 +1,49 @@
+name: Deploy via SCP (Code Only)
+
+on:
+  push:
+    branches:
+      - main         # Trigger on push to master
+  workflow_dispatch:   # Manual trigger option
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v3
+
+      - name: 📤 Deploy Code to Server via SCP
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "."                         # Whole repo
+          target: "/var/www/metricWave"       # Server path
+          overwrite: true
+          strip_components: 0
+
+      - name: 🚀 SSH and Build on Server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/metricWave
+            echo "📦 Installing npm dependencies"
+            npm install --legacy-peer-deps
+
+            echo "🔨 Building the project"
+            npm run build
+
+            echo "🛑 Stopping old PM2 process"
+            pm2 stop ecom-market || true
+            pm2 delete ecom-market || true
+
+            echo "🚀 Starting production server with serve"
+            pm2 start "serve -s build -l 3000" --name ecom-market
+
+            echo "✅ Deployment complete for branch: ${{ github.ref_name }}"

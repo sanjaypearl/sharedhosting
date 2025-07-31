@@ -1,0 +1,32 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /login/
+Disallow: /register/
+Disallow: /password/
+Disallow: /dashboard/
+Disallow: /checkout/
+Disallow: /cart/
+Disallow: /orders/
+Disallow: /api/
+Disallow: /_debugbar/
+Disallow: /storage/
+Disallow: /sample/
+Disallow: /discount/
+Disallow: /inquiry/
+Disallow: /enquiry/
+Disallow: /customization/
+
+
+Allow: /
+
+# Sitemaps per language
+Sitemap: https://www.metricwaveinsights.com/sitemap.xml
+Sitemap: https://www.metricwaveinsights.com/es/sitemap.xml
+Sitemap: https://www.metricwaveinsights.com/de/sitemap.xml
+Sitemap: https://www.metricwaveinsights.com/fr/sitemap.xml
+Sitemap: https://www.metricwaveinsights.com/pt/sitemap.xml
+Sitemap: https://www.metricwaveinsights.com/ar/sitemap.xml
+Sitemap: https://www.metricwaveinsights.com/zh-CN/sitemap.xml
+Sitemap: https://www.metricwaveinsights.com/ja/sitemap.xml
+Sitemap: https://www.metricwaveinsights.com/ko/sitemap.xml
+Sitemap: https://www.metricwaveinsights.com/vi/sitemap.xml
