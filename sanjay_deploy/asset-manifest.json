@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b98a26c7.css",
+    "main.js": "/static/js/main.9c9acf93.js",
+    "static/media/industryBG.png": "/static/media/industryBG.48402a889e947bc4ad9f.png",
+    "static/media/press_release_banner.webp": "/static/media/press_release_banner.d857818fb671f823a893.webp",
+    "static/media/privacy_policy.webp": "/static/media/privacy_policy.8bf54e0b7aac2b6b2ba8.webp",
+    "static/media/term_condition.webp": "/static/media/term_condition.dfe67c0c5675d5504b13.webp",
+    "static/media/carrer_banner.webp": "/static/media/carrer_banner.9688101283d4e77ab27f.webp",
+    "static/media/services_banner (1).webp": "/static/media/services_banner (1).37f208a621ce840dc175.webp",
+    "static/media/Blog_banner.webp": "/static/media/Blog_banner.c496e42c34ba187cc169.webp",
+    "static/media/contactus_banner.webp": "/static/media/contactus_banner.5537dec9d215f613a4b9.webp",
+    "index.html": "/index.html",
+    "main.b98a26c7.css.map": "/static/css/main.b98a26c7.css.map",
+    "main.9c9acf93.js.map": "/static/js/main.9c9acf93.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b98a26c7.css",
+    "static/js/main.9c9acf93.js"
+  ]
+}
