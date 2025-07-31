@@ -7,6 +7,9 @@ on:
     paths-ignore:
       - 'sanjay_deploy/**'
 
+permissions:
+  contents: write
+
 jobs:
   build-and-save:
     runs-on: ubuntu-latest
