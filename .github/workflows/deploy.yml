@@ -22,11 +22,11 @@ jobs:
 
       - name: 📦 Install Dependencies
         working-directory: ./metricWave-main
-        run: npm install
+        run: npm install --legacy-peer-deps   # ✅ Only once, with legacy flag
 
       - name: 🏗️ Build React App
         working-directory: ./metricWave-main
-        run: npm install --legacy-peer-deps
+        run: npm run build                    # ✅ Actually builds React app
 
       - name: 🚚 Copy build to sanjay_deploy/
         run: |
